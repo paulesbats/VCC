@@ -15,7 +15,7 @@ resource "google_compute_subnetwork" "vpc_subnetwork" {
     network = google_compute_network.vpc_network.name
 }
 
-resource "google_compute_instance" "server" {
+resource "google_compute_instance" "server_instance" {
     name = "polytech-server"
     machine_type = "n2-standard-2"
 
@@ -35,5 +35,16 @@ resource "google_compute_instance" "server" {
     }
 }
 
+resource "google_sql_database_instance" "database_instance" {
+    name = "database-instance"
+    database_version = "POSTGRES_15"
 
+    settings {
+      tier = "db-f1-micro"
+    }
+}
 
+resource "google_sql_database" "database" {
+    name = "database"
+    instance = google_sql_database_instance.database_instance.name
+}
