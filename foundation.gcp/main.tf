@@ -15,3 +15,25 @@ resource "google_compute_subnetwork" "vpc_subnetwork" {
     network = google_compute_network.vpc_network.name
 }
 
+resource "google_compute_instance" "server" {
+    name = "polytech-server"
+    machine_type = "n2-standard-2"
+
+    network_interface {
+      network = google_compute_subnetwork.vpc_subnetwork.name
+      network_ip = "192.168.1.1/24"
+
+      access_config {
+        nat_ip = "192.168.1.1/24"
+      }
+    }
+
+    boot_disk {
+      initialize_params {
+        image = "debian-cloud/debian-12"
+      }
+    }
+}
+
+
+
