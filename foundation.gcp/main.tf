@@ -1,4 +1,7 @@
 provider "google"{
     project = "polytech"
-    Region = "europe-west1"
+    region = "europe-west1"
+    zone = "europe-west-1-b"
+    credentials = file("student.json")
 }
+
